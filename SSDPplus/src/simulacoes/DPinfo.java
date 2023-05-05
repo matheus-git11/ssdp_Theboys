@@ -10,7 +10,6 @@ import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import org.apache.commons.math3.stat.inference.ChiSquareTest;
 //import org.apache.commons.math3.stat.inference;
 
 /**
@@ -121,96 +120,7 @@ public class DPinfo {
         return valor;
     }
     
-    public static double p_value(Pattern p, Base b){
-         /*
-        	D1	D2	Sum
-        p	n11	n12	n1
-        p_	n21	n22	n2
-        Sum	|Dp|	|Dn|	|D|
-        
-        n11 = TP (positivos presentes na DP)
-        n21 = |Dp| - TP (positivos não presentes na DP)
-        n12 = FP (negativos presentes na DP)        
-        n11 = |Dn| - FP (negativos ausêntes na DP)
-        
-        REF: Discriminative pattern mining and its applications in bioinformatics      
-        
-        */      
-        
-        //Só é preciso isso para calcular via função pronta!
-        long[][] n = new long[2][2];
-        n[0][0] = p.getTP();
-        n[1][0] = b.getNumeroExemplosPositivo() - n[0][0];
-        n[0][1] = p.getFP();
-        n[1][1] = b.getNumeroExemplosNegativo() - n[0][1];
-        ChiSquareTest chiTest = new ChiSquareTest();
-        //Returns the observed significance level, or p-value, associated with a chi-square test of independence based on the input counts array, viewed as a two-way table.
-        double p_value = chiTest.chiSquareTest(n);
-        //System.out.println("pvalue: " + p_value);
-        return p_value; 
-    }
-        
-    public static double chi_quad(Pattern p, Base b){
-        /*
-        	D1	D2	Sum
-        p	n11	n12	n1
-        p_	n21	n22	n2
-        Sum	|Dp|	|Dn|	|D|
-        
-        n11 = TP (positivos presentes na DP)
-        n21 = |Dp| - TP (positivos não presentes na DP)
-        n12 = FP (negativos presentes na DP)        
-        n11 = |Dn| - FP (negativos ausêntes na DP)
-        
-        REF: Discriminative pattern mining and its applications in bioinformatics      
-        
-        */      
-        
-        //Só é preciso isso para calcular via função pronta!
-        long[][] n = new long[2][2];
-        n[0][0] = p.getTP();
-        n[1][0] = b.getNumeroExemplosPositivo() - n[0][0];
-        n[0][1] = p.getFP();
-        n[1][1] = b.getNumeroExemplosNegativo() - n[0][1];
-        
-//        //Cálculo no braço deu certo, está batendo com a API. Vou manter aqui para não perder o entendimento do processo, mas vou aplicar
-//        //a API por questão de credibilidade.
-//        //Calculando valores esperados!
-//        double[][] nEsperado = new double[2][2];
-//        for(int i = 0; i < 2; i++){            
-//            for(int j = 0; j < 2; j++){
-//                double nIQsum = 0.0;
-//                double nQJsum = 0.0;
-//                for(int q = 0; q < 2; q++){
-//                    nIQsum += n[i][q];
-//                    nQJsum += n[q][j];
-//                }
-//                nEsperado[i][j] = (nIQsum * nQJsum) / (double)b.getNumeroExemplos();                
-//            }
-//        }
-//        
-//        //Calculando chi-quadrado!
-//        double chi = 0.0;
-//        for(int i = 0; i < 2; i++){            
-//            for(int j = 0; j < 2; j++){
-//               chi += Math.pow(n[i][j] - nEsperado[i][j], 2) / nEsperado[i][j];
-//            }
-//        }        
-//               
-//         for(int i = 0; i < 2; i++){            
-//            for(int j = 0; j < 2; j++){
-//                System.out.println("Real:" + n[i][j] + " Esp:" + nEsperado[i][j]);                
-//            }
-//         }
-          
-        
-        ChiSquareTest chiTest = new ChiSquareTest();
-        double chi_quad = chiTest.chiSquare(n);
-        //System.out.println("Chi_quad: " + chi + "/" + chi_quad);
-        //System.out.println("chi_quad: " + chi_quad);
-        
-        return chi_quad;
-    } 
+    
     
     public static double supp(Pattern p, Base b){
         double TP = p.getTP();
@@ -500,16 +410,7 @@ public class DPinfo {
             case Const.METRICA_K:
                 //Nesse caso o cálculo é diferente. Eu quero a união dos exemplos cobertos pelo conjunto de regras.
                 return P.length;            
-            case Const.METRICA_CHI_QUAD:
-                for(; i < P.length; i++){
-                    total += DPinfo.chi_quad(P[i], b);
-                }
-                break;
-            case Const.METRICA_P_VALUE:
-                for(; i < P.length; i++){
-                    total += DPinfo.p_value(P[i], b);
-                }
-                break;
+           
             case Const.METRICA_LIFT:
                 for(; i < P.length; i++){
                     total += DPinfo.lift(P[i], b);

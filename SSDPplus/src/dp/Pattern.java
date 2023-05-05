@@ -534,12 +534,12 @@ public class Pattern implements Comparable<Pattern>, Serializable{
                     case Const.METRICA_Qg:
                         str.append("Qg=" + df2.format(Avaliador.Qg(this.TP, this.FP)));
                         break;
-                    case Const.METRICA_CHI_QUAD:
-                        str.append("Chi2=" + df2.format(Avaliador.chi_quad(this.TP, this.FP)));
-                        break;    
-                    case Const.METRICA_P_VALUE:
-                        str.append("pValue=" + df4.format(Avaliador.p_value(this.TP, this.FP)));
-                        break;
+                    //case Const.METRICA_CHI_QUAD:
+                      //  str.append("Chi2=" + df2.format(Avaliador.chi_quad(this.TP, this.FP)));
+                      //  break;    
+                    //case Const.METRICA_P_VALUE:
+                      //  str.append("pValue=" + df4.format(Avaliador.p_value(this.TP, this.FP)));
+                       // break;
                     case Const.METRICA_LIFT:
                         str.append("Lift=" + df2.format(Avaliador.lift(this.TP, this.FP)));
                         break;

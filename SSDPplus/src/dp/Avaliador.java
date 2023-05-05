@@ -8,7 +8,7 @@ package dp;
 import static java.lang.Math.sqrt;
 import java.util.HashSet;
 import java.util.Iterator;
-import org.apache.commons.math3.stat.inference.ChiSquareTest;
+
 
 /**
  *
@@ -129,9 +129,9 @@ public class Avaliador {
             case Avaliador.METRICA_AVALIACAO_WRACC_OVER_SIZE: //Divide pelo size na classe Pattern
                 qualidade = Avaliador.WRAcc(TP, FP);
                 break;
-            case Avaliador.METRICA_AVALIACAO_CHI_QUAD:
-                qualidade = Avaliador.chi_quad(TP, FP);
-                break;
+           // case Avaliador.METRICA_AVALIACAO_CHI_QUAD:
+              //  qualidade = Avaliador.chi_quad(TP, FP);
+               // break;
             case Avaliador.METRICA_AVALIACAO_LIFT:
                 qualidade = Avaliador.lift(TP, FP);
                 break;
@@ -179,7 +179,7 @@ public class Avaliador {
         return sub;
     }
     
-    public static double chi_quad(int TP, int FP){
+   // public static double chi_quad(int TP, int FP){
             /*
         	D1	D2	Sum
         p	n11	n12	n1
@@ -195,24 +195,24 @@ public class Avaliador {
         OBS: se chi == NaN método retorna zero.
         */      
         //Só é preciso isso para calcular via função pronta!
-        long[][] n = new long[2][2];
-        n[0][0] = TP;
-        n[1][0] = D.numeroExemplosPositivo - n[0][0];
-        n[0][1] = FP;
-        n[1][1] = D.numeroExemplosNegativo - n[0][1];
+       // long[][] n = new long[2][2];
+       // n[0][0] = TP;
+       // n[1][0] = D.numeroExemplosPositivo - n[0][0];
+       // n[0][1] = FP;
+       // n[1][1] = D.numeroExemplosNegativo - n[0][1];
         
 
-        ChiSquareTest chiTest = new ChiSquareTest();
-        double chi_quad = chiTest.chiSquare(n);
+        //ChiSquareTest chiTest = new ChiSquareTest();
+        //double chi_quad = chiTest.chiSquare(n);
         //System.out.println("Chi_quad: " + chi + "/" + chi_quad);
         //System.out.println("chi_quad: " + chi_quad);
-        if(Double.isNaN(chi_quad)){
-            return 0;
-        }       
-        return chi_quad;
-    }
+       // if(Double.isNaN(chi_quad)){
+       //     return 0;
+       // }       
+       // return chi_quad;
+   // }
     
-    public static double p_value(int TP, int FP){
+   /*  public static double p_value(int TP, int FP){
          /*
         	D1	D2	Sum
         p	n11	n12	n1
@@ -226,7 +226,7 @@ public class Avaliador {
         
         REF: Discriminative pattern mining and its applications in bioinformatics      
         
-        */      
+           
         
         //Só é preciso isso para calcular via função pronta!
         long[][] n = new long[2][2];
@@ -243,7 +243,7 @@ public class Avaliador {
         }
         //System.out.println("pvalue: " + p_value);
         return p_value;        
-    }
+    } */
     
     public static double lift(int TP, int FP){
         //Ref: https://en.wikipedia.org/wiki/Lift_(data_mining)
